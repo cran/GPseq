@@ -25,15 +25,25 @@ estimate_exon_gene_expression<-function(reads,exons,genes)
 
       y[1:num_conditions,1:(exons[e,3]-exons[e,2]+1)] = t(reads[exons[e,2]:exons[e,3],4:(3+num_conditions)]);
       
-      out = apply(y,1,generalized_poisson_likelihood);
+      out = apply(y,1,try(generalized_poisson_likelihood,silent=TRUE));
       for(j in 1:num_conditions)
       {
-        if(out[[j]]$mark==1)
+        if(is.list(out[[j]]))
         {
-          chisq=calc_chisq_statistic(y[j,],out[[j]]$lambda,out[[j]]$theta); 
+          if(out[[j]]$mark==1)
+          {
+            chisq=try(calc_chisq_statistic(y[j,],out[[j]]$lambda,out[[j]]$theta),silent=TRUE); 
+            if(is.list(chisq))
+            {
+              chisq_exon_out[[e,j]] = chisq;
+            }
+          }
+          exon_out[[e,j]] = out[[j]];
         }
-        exon_out[[e,j]] = out[[j]];
-        chisq_exon_out[[e,j]] = chisq;
+        else
+        {
+          exon_out[[e,j]] = list(mark=0,theta=-1,lambda=-1,y_bar=mean(y[j,]),length=n);
+        }
       }
     }
     
@@ -50,17 +60,27 @@ estimate_exon_gene_expression<-function(reads,exons,genes)
       y[1:num_conditions,(1+prev):((exon_ends[j]-exon_starts[j]+1)+prev)] = t(reads[exon_starts[j]:exon_ends[j],4:(3+num_conditions)]);  
       prev = (exon_ends[j]-exon_starts[j]+1)+prev;
     }
-    out = apply(y,1,generalized_poisson_likelihood);
+    out = apply(y,1,try(generalized_poisson_likelihood,silent=TRUE));
     for(j in 1:num_conditions)
     {
-      if(out[[j]]$mark==1)
+      if(is.list(out[[j]]))
       {
-        chisq=calc_chisq_statistic(y[j,],out[[j]]$lambda,out[[j]]$theta); 
-        norm_gp[j] = norm_gp[j]+ (out[[j]]$theta*out[[j]]$length);
+        if(out[[j]]$mark==1)
+        {
+          chisq=try(calc_chisq_statistic(y[j,],out[[j]]$lambda,out[[j]]$theta),silent=TRUE); 
+          norm_gp[j] = norm_gp[j]+ (out[[j]]$theta*out[[j]]$length);
+          if(is.list(chisq))
+          {
+            chisq_gene_out[[i,j]] = chisq;
+          }
+        }
+        norm_p[j] = norm_p[j] + ((out[[j]]$y_bar)*(out[[j]]$length));
+        gene_out[[i,j]] = out[[j]];
       }
-      norm_p[j] = norm_p[j] + ((out[[j]]$y_bar)*(out[[j]]$length));
-      gene_out[[i,j]] = out[[j]];
-      chisq_gene_out[[i,j]] = chisq;
+      else
+      {
+        gene_out[[i,j]] = list(mark=0,theta=-1,lambda=-1,y_bar=mean(y[j,]),length=n);
+      }
     }
   }
     

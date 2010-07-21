@@ -38,7 +38,10 @@ calc_chisq_statistic <- function(x,lambda,theta)
 
   zs = theta + (0:lx)*lambda;
   
-  p = -1*log(gamma(1:(lx+1))) + log(theta) +(-1:(lx-1))*log(zs[1:(lx+1)])-zs[1:(lx+1)];
+  zsnew=zs[zs>0];
+  len =length(zsnew)-1;
+
+  p = -1*log(gamma(1:(len+1))) + log(theta) +(-1:(len-1))*log(zs[1:(len+1)])-zs[1:(len+1)];
 
   expected_gp = exp(p)*n;
 
