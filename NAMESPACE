@@ -1,0 +1,12 @@
+export(likelihood_ratio_tissue_poisson,
+       likelihood_ratio_poisson_exon_gene,
+       calc_chisq_statistic,
+       likelihood_ratio_tissue_generalized_poisson,
+       perform_permutation_ds,
+       perform_permutation_de,
+       generalized_poisson_likelihood,
+       likelihood_ratio_generalized_poisson_exon_gene,
+       estimate_exon_gene_expression,
+       estimate_differential_expression,
+       estimate_differential_splicing);
+
