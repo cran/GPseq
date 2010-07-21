@@ -12,6 +12,9 @@ estimate_exon_gene_expression<-function(reads,exons,genes)
   gene_out = array(list(NULL),c(num_genes,num_conditions));
   chisq_gene_out = array(list(NULL),c(num_genes,num_conditions));
 
+  norm_gp = rep(0,num_conditions);
+  norm_p = rep(0,num_conditions);
+
   for(i in 1:num_genes)
   {
 #Calculating Parameters and Goodness of Fit Statistics for exons
@@ -33,6 +36,7 @@ estimate_exon_gene_expression<-function(reads,exons,genes)
         chisq_exon_out[[e,j]] = chisq;
       }
     }
+    
 #Calculating Parameters and Goodness of Fit Statistics for genes
 
     n = genes[i,4];
@@ -52,11 +56,14 @@ estimate_exon_gene_expression<-function(reads,exons,genes)
       if(out[[j]]$mark==1)
       {
         chisq=calc_chisq_statistic(y[j,],out[[j]]$lambda,out[[j]]$theta); 
+        norm_gp[j] = norm_gp[j]+ (out[[j]]$theta*out[[j]]$length);
       }
+      norm_p[j] = norm_p[j] + ((out[[j]]$y_bar)*(out[[j]]$length));
       gene_out[[i,j]] = out[[j]];
       chisq_gene_out[[i,j]] = chisq;
     }
   }
-
-  return(list(exon_out = exon_out,chisq_exon_out = chisq_exon_out,gene_out = gene_out,chisq_gene_out = chisq_gene_out));
+    
+ 
+  return(list(exon_out = exon_out,chisq_exon_out = chisq_exon_out,gene_out = gene_out,chisq_gene_out = chisq_gene_out,norm_gp = norm_gp, norm_p = norm_p));
 }

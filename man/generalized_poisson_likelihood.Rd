@@ -17,8 +17,9 @@ generalized_poisson_likelihood(y)
   \item{theta }{ Maximum Likelihood Estimate for theta in the Generalized Poisson Model(theta,lambda)}
   \item{lambda}{ Maximum Likelihood Estimate for lambda in the Generalized Poisson Model(theta,lambda)}
   \item{y_bar}{ Mean of y which is also the Maximum Likelihood Estimate for lambda for the Poisson model}
+  \item{length}{ Length of y which will be later used to calculate the normalization values}
 }
-\references{ Consul, P. C. (1989) \emph{Generalized Poisson Distributions: Properties and Applications.} New York: Marcel Dekker. \cr Sudeep Srivastava, Liang Chen \emph{A two-parameter generalized Poisson model to improve the analysis of RNA-Seq data} }
+\references{ Consul, P. C. (1989) \emph{Generalized Poisson Distributions: Properties and Applications.} New York: Marcel Dekker. \cr Sudeep Srivastava, Liang Chen \emph{A two-parameter generalized Poisson model to improve the analysis of RNA-Seq data} Nucleic Acids Research Advance Access published July 29,2010 \emph{doi : 10.1093/nar/gkq670}  }
 \author{ Sudeep Srivastava, Liang Chen }
 \examples{
 y = rpois(100,10);
@@ -27,7 +28,7 @@ out = generalized_poisson_likelihood(y);
 if(out$mark==1)
 {
 #Value of Theta
-  cat("theta = ",out$theta,"lambda = ",out$lambda,"lambda_poisson = ",out$y_bar,"\n");
+  cat("theta = ",out$theta,"lambda = ",out$lambda,"lambda_poisson = ",out$y_bar,"Length = ",out$length,"\n");
 }
 
 }

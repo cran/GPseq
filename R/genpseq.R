@@ -482,7 +482,7 @@ generalized_poisson_likelihood <- function(y)
 
   if(var_y == 0 || ly < 2)
   {
-    return(list(mark=0,theta=-1,lambda=-1,y_bar=y_bar));
+    return(list(mark=0,theta=-1,lambda=-1,y_bar=y_bar,length=n));
   }
   else
   {
@@ -555,7 +555,7 @@ generalized_poisson_likelihood <- function(y)
     }
   }
   output = c(mark,theta,l,y_bar);
-  return(list(mark=mark,theta=theta,lambda=l,y_bar=y_bar));
+  return(list(mark=mark,theta=theta,lambda=l,y_bar=y_bar,length=n));
 }
 
 #perform_permutation_de <- function(x,y,num_permute)

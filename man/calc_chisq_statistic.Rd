@@ -22,7 +22,7 @@ calc_chisq_statistic(x, lambda, theta)
   \item{chisq1 }{ Chi Square statistic for the fit to the Generalized Poisson Model}
   \item{chisq2 }{ Chi Square Statistic for the fit to the Poisson Model}
 }
-\references{ Consul, P. C. (1989) \emph{Generalized Poisson Distributions: Properties and Applications.} New York: Marcel Dekker. \cr Sudeep Srivastava, Liang Chen \emph{A two-parameter generalized Poisson model to improve the analysis of RNA-Seq data} }
+\references{ Consul, P. C. (1989) \emph{Generalized Poisson Distributions: Properties and Applications.} New York: Marcel Dekker. \cr Sudeep Srivastava, Liang Chen \emph{A two-parameter generalized Poisson model to improve the analysis of RNA-Seq data} Nucleic Acids Research Advance Access published July 29,2010 \emph{doi : 10.1093/nar/gkq670} }
   
 \author{ Sudeep Srivastava, Liang Chen }
 

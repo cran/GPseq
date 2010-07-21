@@ -19,7 +19,7 @@ likelihood_ratio_tissue_poisson(x, lambda1, y, lambda2, w)
 \value{
   \item{Ptest }{Chi Square statistic = -2 * Log Likelihood Ratio}
 }
-\references{ Consul, P. C. (1989) \emph{Generalized Poisson Distributions: Properties and Applications.} New York: Marcel Dekker. \cr Sudeep Srivastava, Liang Chen \emph{A two-parameter generalized Poisson model to improve the analysis of RNA-Seq data} }
+\references{ Consul, P. C. (1989) \emph{Generalized Poisson Distributions: Properties and Applications.} New York: Marcel Dekker. \cr Sudeep Srivastava, Liang Chen \emph{A two-parameter generalized Poisson model to improve the analysis of RNA-Seq data}  Nucleic Acids Research Advance Access published July 29,2010 \emph{doi : 10.1093/nar/gkq670}  }
 \author{ Sudeep Srivastava, Liang Chen }
 \examples{
 set.seed(666);
