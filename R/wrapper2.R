@@ -23,14 +23,14 @@ estimate_differential_expression<-function(reads,exons,genes,norm_gp,norm_p,do_p
       y[1:num_conditions,(1+prev):((exon_ends[j]-exon_starts[j]+1)+prev)] = t(reads[exon_starts[j]:exon_ends[j],4:(3+num_conditions)]);  
       prev = (exon_ends[j]-exon_starts[j]+1)+prev;
     }
-    out = apply(y,1,try(generalized_poisson_likelihood,silent=TRUE));
+    out = try(apply(y,1,generalized_poisson_likelihood),silent=TRUE);
 
 #Comparing across all conditions
     for(j in 1:(num_conditions-1))
     {
       for(k in (j+1):num_conditions)
       {
-        if(is.list(out[[j]]) && is.list(out[[k]]))
+        if(is.list(out))
         {
           if(out[[j]]$mark==1 && out[[k]]$mark==1)
           {

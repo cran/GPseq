@@ -25,10 +25,10 @@ estimate_exon_gene_expression<-function(reads,exons,genes)
 
       y[1:num_conditions,1:(exons[e,3]-exons[e,2]+1)] = t(reads[exons[e,2]:exons[e,3],4:(3+num_conditions)]);
       
-      out = apply(y,1,try(generalized_poisson_likelihood,silent=TRUE));
+      out = try(apply(y,1,generalized_poisson_likelihood),silent=TRUE);
       for(j in 1:num_conditions)
       {
-        if(is.list(out[[j]]))
+        if(is.list(out))
         {
           if(out[[j]]$mark==1)
           {
@@ -60,10 +60,10 @@ estimate_exon_gene_expression<-function(reads,exons,genes)
       y[1:num_conditions,(1+prev):((exon_ends[j]-exon_starts[j]+1)+prev)] = t(reads[exon_starts[j]:exon_ends[j],4:(3+num_conditions)]);  
       prev = (exon_ends[j]-exon_starts[j]+1)+prev;
     }
-    out = apply(y,1,try(generalized_poisson_likelihood,silent=TRUE));
+    out = try(apply(y,1,generalized_poisson_likelihood),silent=TRUE);
     for(j in 1:num_conditions)
     {
-      if(is.list(out[[j]]))
+      if(is.list(out))
       {
         if(out[[j]]$mark==1)
         {

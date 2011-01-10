@@ -30,7 +30,7 @@ estimate_differential_splicing<-function(reads,exons,genes,do_permute)
       exon_end_map[j] = (exon_ends[j]-exon_starts[j]+1)+prev;
       prev = (exon_ends[j]-exon_starts[j]+1)+prev;
     }
-    out_gene = apply(y,1,try(generalized_poisson_likelihood,silent=TRUE));
+    out_gene = try(apply(y,1,generalized_poisson_likelihood),silent=TRUE);
     
     for(e in genes[i,2]:genes[i,3])
     {
@@ -40,13 +40,13 @@ estimate_differential_splicing<-function(reads,exons,genes,do_permute)
 
       z[1:num_conditions,1:(exons[e,3]-exons[e,2]+1)] = t(reads[exons[e,2]:exons[e,3],4:(3+num_conditions)]);
      
-      out_exon = apply(z,1,try(generalized_poisson_likelihood,silent=TRUE));
+      out_exon = try(apply(z,1,generalized_poisson_likelihood),silent=TRUE);
       
       for(r in 1:(num_conditions-1))
       {
         for(tr in (r+1):num_conditions)
         {
-          if(is.list(out_gene[[r]]) && is.list(out_gene[[tr]]) && is.list(out_exon[[r]]) && is.list(out_exon[[tr]]))
+          if(is.list(out_gene) && is.list(out_exon))
           {
             if(out_gene[[r]]$mark == 1 && out_gene[[tr]]$mark == 1 && out_exon[[r]]$mark == 1 && out_exon[[tr]]$mark ==1)
             {
