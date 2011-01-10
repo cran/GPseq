@@ -52,15 +52,12 @@ estimate_differential_expression<-function(reads,exons,genes,norm_gp,norm_p,do_p
             {
               final = c(compare_j_k,gamma);
               compare_gp[[i,j,k]] = final;
-              if(compare_j_k$mark == 1)
-              {
-                normp = norm_p[k]/norm_p[j];
-                compare_j_k_poisson = likelihood_ratio_tissue_poisson(y[j,],mean(y[j,]),y[k,],mean(y[k,]),normp);
-                compare_p[[i,j,k]] = compare_j_k_poisson;
-              }
             }
           }
         }
+        normp = norm_p[k]/norm_p[j];
+        compare_j_k_poisson = likelihood_ratio_tissue_poisson(y[j,],mean(y[j,]),y[k,],mean(y[k,]),normp);
+        compare_p[[i,j,k]] = compare_j_k_poisson;
       }
     }
   }
